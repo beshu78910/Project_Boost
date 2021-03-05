@@ -1140,7 +1140,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.9355e-41, z: 0, w: 7.78125}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1328,7 +1328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.046480864, y: 0.004569208, z: 0.00033982706, w: -0.9989087}
-  m_LocalPosition: {x: 49, y: 27.8, z: -73.9}
+  m_LocalPosition: {x: 49.8, y: 19.3, z: -164.9}
   m_LocalScale: {x: 1.2623, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3319,6 +3319,18 @@ PrefabInstance:
       propertyPath: MainThurst
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 132051663, guid: 2ca3e9f42b262cf4d8fad2cfeb9106bf, type: 3}
+      propertyPath: MainEngine
+      value: 
+      objectReference: {fileID: 8300000, guid: 8d2fb85f6d5faa141af442df571abe90, type: 3}
+    - target: {fileID: 132051663, guid: 2ca3e9f42b262cf4d8fad2cfeb9106bf, type: 3}
+      propertyPath: DeathEngine
+      value: 
+      objectReference: {fileID: 8300000, guid: 732a9a580c136294ca2c162048796b7a, type: 3}
+    - target: {fileID: 132051663, guid: 2ca3e9f42b262cf4d8fad2cfeb9106bf, type: 3}
+      propertyPath: LevelSwitching
+      value: 
+      objectReference: {fileID: 8300000, guid: 05f2f637cfb7f864cb502ba73e3254ab, type: 3}
     - target: {fileID: 6148321263383723782, guid: 2ca3e9f42b262cf4d8fad2cfeb9106bf,
         type: 3}
       propertyPath: m_Name

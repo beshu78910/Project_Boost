@@ -12,7 +12,13 @@ public class Rocket : MonoBehaviour
      [SerializeField] float RotationSpeed = 100f;
      [SerializeField] float MainThurst = 100f;
      private bool controlEnable = true;
+     [SerializeField] AudioClip MainEngine;
+     [SerializeField] AudioClip DeathEngine;
+     [SerializeField] AudioClip LevelSwitching;
      
+     [SerializeField] ParticleSystem RocketParticle;
+     [SerializeField] ParticleSystem successParticle;
+     [SerializeField] ParticleSystem deathParticle;
 
      enum State
      {
@@ -25,6 +31,7 @@ public class Rocket : MonoBehaviour
      private State state = State.Alive;
 
      private AudioSource audioSource;
+     private ParticleSystem particleSource;
      
      
     // Start is called before the first frame update
@@ -32,7 +39,6 @@ public class Rocket : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        
 
 
     }
@@ -49,14 +55,16 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finish":
                 state = State.Transcending;
+              
+                audioSource.PlayOneShot(LevelSwitching);
+                successParticle.Play();
                 Invoke("LoadScene", 1f);
+              
                 break;
+            
             default:
-                controlEnable = false;
-                print("Dead");
-                state = State.Dying;
-                audioSource.Stop();
-                Invoke("LoadSceneN0", 2f);
+              startDeath();
+               
                 break;
             
         }
@@ -69,15 +77,36 @@ public class Rocket : MonoBehaviour
 
      private void LoadSceneN0()
      {
+         
          SceneManager.LoadScene(0);
+         
      }
 
+     private void delayDeathSound()
+     {
+         audioSource.PlayOneShot(LevelSwitching);
+     }
+
+     private void startDeath()
+     {
+         controlEnable = false;
+         state = State.Dying;
+         audioSource.Stop();
+         audioSource.PlayOneShot(DeathEngine);
+         RocketParticle.Stop();
+         deathParticle.Play();
+         Invoke("delayDeathSound", 2f);
+         Invoke("LoadSceneN0", 3f);
+         
+     }
+     
+     
      // Update is called once per frame
     void Update()
     {
         if (state == State.Alive) 
         {
-            Thurst();
+            ResponeToThurst();
             Rotate();
 
         }
@@ -116,28 +145,38 @@ void Rotate()
 
 
 
-    void Thurst()
+    void ResponeToThurst()
     {
         
-        float ThurstSpeed = MainThurst * Time.deltaTime;
+        
         if (Input.GetKey(KeyCode.Space))
         {
-            
-            print("Thurst");
-            rigidbody.AddRelativeForce(Vector3.up * ThurstSpeed);
-            
-            
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-                
-            } else if (!Input.GetKey(KeyCode.Space))
-            {
-                audioSource.Stop();
-            }
+            ApplyThurst();
+            RocketParticle.Play();
+        
+
+
         } 
+        else 
+        {
+            audioSource.Stop();
+            RocketParticle.Stop();
+           
+        }
         
         
     }
+
+    void ApplyThurst()
+    {
+        float ThurstSpeed = MainThurst * Time.deltaTime;
+        rigidbody.AddRelativeForce(Vector3.up * ThurstSpeed);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(MainEngine);
+                
+        }
+       
+    } 
 
 }
