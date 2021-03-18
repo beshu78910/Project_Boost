@@ -24,8 +24,9 @@ public class Rocket : MonoBehaviour
      {
          Alive,
          Transcending,
-         Dying
-         
+         Dying,
+         NoCollision
+
      };
 
      private State state = State.Alive;
@@ -39,15 +40,17 @@ public class Rocket : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        
 
 
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive)
+        if (state != State.Alive || state == State.NoCollision)
         {
             return;
-        }
+        } 
+        
         switch (collision.gameObject.tag)
         {
             case "Friendly":
@@ -68,6 +71,7 @@ public class Rocket : MonoBehaviour
                 break;
             
         }
+        
     }
 
      private void LoadScene()
@@ -99,29 +103,58 @@ public class Rocket : MonoBehaviour
          Invoke("LoadSceneN0", 3f);
          
      }
+
+     
      
      
      // Update is called once per frame
     void Update()
     {
-        if (state == State.Alive) 
+        if (state == State.Alive || state == State.NoCollision) 
         {
             ResponeToThurst();
             Rotate();
+          
 
         }
+
+        if (state == State.NoCollision && Input.GetKey(KeyCode.C))
+        {
+            state = State.Alive;
+        } else if (Input.GetKey(KeyCode.C))
+        {
+            state = State.NoCollision;
+        }
+
+       
+        ManualLevelSwitch();
+   
        
      // audioSource.clip = sound;
      // sound = Resources.Load<AudioClip>("rrocket");
         
     }
-    
-      
+
+    void ManualLevelSwitch()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadSceneN0();
+        }
+    }
+
+    // void CollisionToggle(Collision State)
+    // {
+    //     if (Input.GetKey(KeyCode.C))
+    //     {
+    //         State.gameObject.tag = "Friendly";
+    //     }
+    // }
 
 void Rotate()
 {
     rigidbody.freezeRotation = true;
-   
+
     float RotationTime = RotationSpeed * Time.deltaTime;
 
     if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D) == false)

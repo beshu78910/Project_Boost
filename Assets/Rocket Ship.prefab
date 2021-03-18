@@ -66,6 +66,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae882e286cb44114c9823179e2700dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RotationSpeed: 100
+  MainThurst: 100
+  MainEngine: {fileID: 0}
+  DeathEngine: {fileID: 0}
+  LevelSwitching: {fileID: 0}
+  RocketParticle: {fileID: 0}
+  successParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!82 &6298812692805060250
 AudioSource:
   m_ObjectHideFlags: 0
@@ -314,7 +322,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4c5ba0a3a0f95ad42b727f2c861b3128, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
